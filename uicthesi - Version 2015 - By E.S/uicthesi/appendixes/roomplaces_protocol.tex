@@ -1,0 +1,105 @@
+\chapter{RoomPlaces protocol}
+
+\label{apdx:roomplaces_protocol}
+
+
+RoomPlaces protocol is a set of rules that allow every RoomPlaces component to communicate. It is specifically designed for supporting the following functionalities:
+\begin{itemize}
+    \item Add resource
+    \item Delete resource
+    \item Update the resource position for automatic tracked resources
+    \item Update the resource location for static resources
+    \item Update the state of the resource (data associated to that resource)
+    \item Add, modify and remove a discrete tracking coordinate system
+    \item Notify arrival and departure events (when a dynamic resource is near a static resource)
+\end{itemize}
+
+The protocol supports also groupings: a group of resources allow more efficient resource retrieval. This functionality was not implemented in the first prototype.
+
+The majority of the functionalities can be accessed in both \textit{push} (subscribing to a channel and wait for update) and \textit{pull} (explicitly requesting the data) modality. The idea behind this choice is that \textit{nutella.location} needs the state of the entire system during the start-up phase and then only small updates for being synchronized with the central server.
+
+In this appendix I describe the RoomPlaces protocol using BNF \cite{naur:revised} for the grammar. This protocol is based on the notion of nutella channels, every channel has also a modality that can be publish/subscribe or request/response (a channel can also support both the modalities because nutella protocol support it \autoref{apdx:nutella_protocol})
+
+
+\section{Publish/Subscribe channels}
+All the channels are padded with \textit{/location} that is the convention name for \textit{nutella.location} communications.
+
+\begin{table}
+\centering
+\begin{tabular}{ | l | l | l | l | }
+    \hline Channel & Description & Recipient & Message \\
+    \hline /resource/add                & Add a new resource        & Server & $<$resource\_add$>$ \\
+    \hline /resource/remove             & Remove a resource         & Server & $<$resource\_remove$>$ \\
+    \hline /resource/update             & Update a resource         & Server & $<$resource\_update$>$ \\
+    \hline /resources/update            & Update a set of resources & Server & $<$resources\_update$>$ \\
+    \hline /resources/added             & Set of resources added    & Client & $<$resources\_added$>$ \\
+    \hline /resources/removed           & Set of resources removed  & Client & $<$resources\_removed$>$ \\
+    \hline /resources/updated           & Set of resources updated  & Client & $<$resources\_updated$>$ \\
+    \hline /room/update                 & Update the room           & Server & $<$room\_update$>$ \\
+    \hline /room/updated                & Notify a room update      & Client & $<$room\_updated$>$ \\
+    \hline /resource/static/$<$rid$>$/enter & Notify an enter event & Client & $<$event\_enter$>$ \\
+    \hline /resource/static/$<$rid$>$/exit  & Notify an exit event  & Client & $<$event\_exit$>$ \\
+    \hline /tracking/discrete/update    & Update the discrete coord & Server & $<$discrete\_update$>$ \\
+    \hline /tracking/discrete/updated   & Notify disc coord update  & Client & $<$discrete\_updated$>$ \\
+    \hline
+\end{tabular}
+\end{table}
+
+\section{Request/Response channels}
+All the channels are padded with \textit{/location} that is the convention name for \textit{nutella.location} communications.
+
+Every request is done from the clients and the server will send a response. 
+\begin{table}
+\centering
+\begin{tabular}{ | l | l | l | l | }
+    \hline Channel & Description & Response \\
+    \hline /resources                & Set of resources                 & $<$resources\_response$>$ \\
+    \hline /room                     & Room Information                 & $<$room\_response$>$ \\
+    \hline /tracking/discrete        & Discrete coordinate information  & $<$discrete\_response$>$ \\
+    \hline
+\end{tabular}
+\end{table}
+
+\section{Protocol grammar}
+The RoomPlaces protocol grammar is a subset of JSON grammar because it uses JSON primitives (present in the majority of the programming languages) for "stringifying" objects.
+
+\begin{lstlisting}[language={}]
+<resource_add> ::= {"rid": "<rid>", "model": "<model>", "type": "<type>" [, "proximity_range": <float>]}
+<resource_remove> ::= {"rid": "<rid>"}
+<resource_update> ::= {"rid": "<rid>", (<continuous> | <discrete> | <proximity> | <parameters>)}
+<resources_update> ::= {"resources": `[' [<resource_update> (, <resource_update>)* ] `]'}
+<resources_added> ::= {"resources": `[' <resource> (, <resource>)* `]'}
+<resources_removed> ::= 
+<resources_updated> ::= {"rid": "<rid>", "model": "<model>", "type": "<type>", (<continuous> | <discrete> | <proximity>), <parameters_updated> [, "proximity_range": <float>]}
+<room_update> ::= {"x": <float>, "y": <float>}
+<room_updated> ::= <room_update>
+<event_enter> ::= {"resources": `[' <resource> (, <resource>)* `]'}
+<event_exit> ::= {"resources": `[' <resource> (, <resource>)* `]'}
+<discrete_update> ::= {"tracking": <discrete_tracking>}
+<discrete_updated> ::= <discrete_update>
+
+<resources_response> ::= {"resources": `[' <resource> (, <resource>)* `]'}
+<room_response> ::= <room_update>
+<discrete_response> ::= {tracking: <discrete_tracking>}
+
+<resource> ::= {"rid": "<rid>", "model": "<model>", "type": "<type>"}
+<continuous> ::= "continuous": {x: <float>, y: <float>}
+<discrete> ::= "discrete": {"x": <discrete_n>, "y": <discrete_n>}
+<proximity> ::= "proximity": {["rid": "<rid>", "distance": <float>]}
+<parameters> ::= "parameters": `['[<parameter> (, <parameter>)*]`]'
+<parameter> ::= {"key": "<string>" , ("value": "<string>" | "delete": true)}
+<parameters_updated> ::= "parameters": {(<key>: '<string>')*}
+<discrete_tracking> ::= {"x": <float>, "y": <float>, "width": <float>, "height": <float>, "n_x": <float>, "n_y": <float>, "t_x": "<discrete_type>", "t_y": "<discrete_type>"}
+<discrete_type> ::= NUMBER | LETTER
+<discrete_n> ::= <int> | <uppercase_char>
+<key> ::= <string>
+<rid> ::= <string>
+<int> ::= <digit>+
+<string> ::= (<digit> | <uppercase_char> | <lowercase_char>)*
+<digit> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+<uppercase_char> ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z
+<lowercase_char> ::= a | b | c | d | e | f | h | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
+\end{lstlisting}
+
+
+

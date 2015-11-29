@@ -1,0 +1,47 @@
+\chapter{Nutella protocol}
+
+\label{apdx:nutella_protocol}
+
+In this appendix I describe how nutella protocol works and how it implements the functionalities requested for providing push and pull strategies.
+
+Nutella protocol encapsulate messages into MQTT protocol that allows binary content. By design nutella protocol allows only content that can be encoded as JSON (basically everything) and add a little payload that allows both end to communicate using the right strategy.
+
+A nutella message looks like this:
+
+\begin{lstlisting}[language=NutellaProtocol]
+{
+    "id": "req_res_id",
+    "from": {
+        "type": "run",
+        "run_id": "my_run_id",
+        "app_id": "my_app_id",
+        "component_id": "my_component_id",
+        "resource_id": "my_resource_id"
+    },
+    "type": "request",
+    "payload": {
+        /* Custom data */
+    }
+}
+\end{lstlisting}
+
+In order to distinguish between push and pull strategy it is used "type" field (the more external one) that can be "request", "response" or "publish".
+\begin{itemize}
+    \item \textit{Request}: from client to server
+    \item \textit{Response}: from server to client
+    \item \textit{Publish}: peer communication
+\end{itemize}
+
+The custom data in inserted in the "payload" field and is encoded in JSON format.
+
+The "from" field is passed as is to the subscribe and handle request callbacks and it is used mainly for debugging purposes.
+
+This protocol is never seen from the developer because the nutella.net primitives automatically incapsulate and decapsulate the payload automatically when they're called.
+
+The primitives are:
+\begin{itemize}
+    \item \textit{nutella.net.subscribe(channel, callback(message, from))}
+    \item \textit{nutella.net.publish(channel, message)}
+    \item \textit{nutella.net.request(channel, request)}
+    \item \textit{nutella.net.handle\_requests(channel, callback(request, from))}
+\end{itemize}

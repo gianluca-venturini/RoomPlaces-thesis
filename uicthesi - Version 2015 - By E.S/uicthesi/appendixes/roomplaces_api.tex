@@ -1,0 +1,120 @@
+\chapter{RoomPlaces APIs}
+
+\label{apdx:roomplaces_api}
+
+In this appendix I describe in details \textit{RoomPlaces} APIs. The goal of this APIs in providing a fast way for accessing \textit{RoomPlaces} functionalities, for this reason they are contained in the nutella library and are accessible though function call in the native language. On this appendix I will explain every function call using a Javascript syntax, in the other languages the conventions of the language are followed.
+
+\section{Obtaining a resource object}
+
+\begin{lstlisting}
+nutella.location.resources
+\end{lstlisting}
+Return an array of resources.
+
+\begin{lstlisting}
+nutella.location.resource['rid']
+\end{lstlisting}
+Retrieve the resource with the specified \textit{rid}.
+
+\section{Resource object manipulation}
+Every resource is an instance of an object and properties of the object are the information associated to the resource like position and additional parameters.
+
+\begin{lstlisting}
+resource.continuous.x
+\end{lstlisting}
+Return the x coordinate in the continuous reference system. 
+
+\begin{lstlisting}
+resource.continuous.y
+\end{lstlisting}
+Return the y coordinate in the continuous reference system.
+
+\begin{lstlisting}
+resource.discrete.x
+\end{lstlisting}
+Return the x coordinate in the discrete reference system.
+
+\begin{lstlisting}
+resource.discrete.y
+\end{lstlisting}
+Return the y coordinate in the discrete reference system.
+
+\begin{lstlisting}
+resource.proximity.rid
+\end{lstlisting}
+Property present in dynamic resources automatically tracked with the proximity tracking system. Return the resource identifier of the nearest static resource if the current resource is in the range.
+
+\begin{lstlisting}
+resource.proximity.proximity.continuous.x
+\end{lstlisting}
+Property present in dynamic resources automatically tracked with the proximity tracking system. Return the continuous x coordinate of the nearest static resource if the current resource is in the range.
+
+\begin{lstlisting}
+resource.proximity.proximity.continuous.y
+\end{lstlisting}
+Property present in dynamic resources automatically tracked with the proximity tracking system. Return the continuous y coordinate of the nearest static resource if the current resource is in the range.
+
+\begin{lstlisting}
+resource.proximity.proximity.discrete.x
+\end{lstlisting}
+Property present in dynamic resources automatically tracked with the proximity tracking system. Return the discrete x coordinate of the nearest static resource if the current resource is in the range.
+
+\begin{lstlisting}
+resource.proximity.proximity.discrete.y
+\end{lstlisting}
+Property present in dynamic resources automatically tracked with the proximity tracking system. Return the discrete y coordinate of the nearest static resource if the current resource is in the range.
+
+\section{Tangible containers}
+
+\begin{lstlisting}
+resource.parameters
+\end{lstlisting}
+Return a map of parameters
+
+\begin{lstlisting}
+resource.parameter['key']
+\end{lstlisting}
+Return the value of the parameter identified with "key" name. Writing on the element identified with "key" will overwrite the previous value.
+
+\begin{lstlisting}
+resource.notifyUpdate
+\end{lstlisting}
+Writing true on this property will cause a notification function callback to be fired every time the resource is updated in any part of the system.
+
+\begin{lstlisting}
+resource.notifyEnter
+\end{lstlisting}
+This can be set to true only on static resources. Writing true on this property will cause a notification function callback to be fired every time a dynamic resource enter in the range. It will not be fired for resources that are already in the range when the system start, use the \textit{pull} API for this.
+
+\begin{lstlisting}
+resource.notifyExit
+\end{lstlisting}
+This can be set to true only on static resources. Writing true on this property will cause a notification function callback to be fired every time a dynamic resource enter in the range.
+
+\begin{lstlisting}
+nutella.location.resourceUpdated(function(resource) {
+    /* callback code here */
+})
+\end{lstlisting}
+Called when a resource is updated only for the resources that have \textit{resource.notifyUpdate = true}. 
+
+\begin{lstlisting}
+nutella.location.resourceEntered(function(dynamicResource, staticResource) {
+    /* callback code here */
+})
+\end{lstlisting}
+Called when a dynamic resource enter in the range of a static resource only for the resources that have \textit{resource.notifyEnter = true}.
+
+\begin{lstlisting}
+nutella.location.resourceExited(function(dynamicResource, staticResource) {
+    /* callback code here */
+})
+\end{lstlisting}
+Called when a dynamic resource enter in the range of a static resource only for the resources that have \textit{resource.notifyExit = true}.
+
+\begin{lstlisting}
+nutella.location.ready(function() {
+    /* callback code here */
+})
+\end{lstlisting}
+Called only once when the RoomPlaces APIs are synchronized with the remote state of the server and ready to be used. Every call done before this callback is fired will not work properly and will return an inconsistent state. 

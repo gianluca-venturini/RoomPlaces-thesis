@@ -1,0 +1,70 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%
+%%%%%%%%%% READ THIS !!%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%s
+
+List of edits to comply the 2015 standards for engineering students of TOP_UIC
+
+
+IN uicthesi.cls:
+------------------------------
+% added committee list  : GO TO LINE 182 and edit the names !!
+
+
+% changed the starting point for the Roman numerals in the first pages
+
+% at row 155  \c@page=1 makes the numerals start from II
+
+
+
+
+IN UICTEST.TEX
+--------------------------------------
+%removed copyright page
+
+%added useful packages (you can lookup on internet how to use some of them)
+
+% included a correctly formatted table
+% included a correctly formatted figure
+
+%included a way to do the final VITA
+(edit vita.tex with your data)
+
+
+NOTES:
+---------------------------------------
+go to options-> configure texmaker -> quick build -> select the second one to compile
+ also the bibliography each time you use quick compile.
+
+It is not necessary to do quick build every time, you can just do a PDFLatex build 
+if you didn't update the bib, that is faster.
+
+
+if you get weird errors from the compiler (se sbarella insomma) go to Tools->Clean
+if it doesn't solve the weird error, then you actually did something wrong.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% By Eric Serra 2015 eserra9@uic.edu %
+% If you really need, contact me only for problems related to the edits I did, I don't know anything else. %

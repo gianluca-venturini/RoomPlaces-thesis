@@ -1,0 +1,147 @@
+% UICTEST.TEX
+% This is a test file for my port of UICTHESI
+% to LaTeX 2e. This is based in part on UCTHESIS.
+%
+
+%\documentclass[draft]{uicthesi}
+\documentclass{uicthesi}
+\usepackage{tabularx} %vita
+\usepackage{ltablex} % for pagebreaks of tabularx
+\usepackage{array}		 %vita
+\usepackage{longtable} %vita
+\usepackage{ltxtable}  %vita 
+\usepackage{siunitx}
+\usepackage{xfrac}
+\usepackage[english]{babel}
+\usepackage{mwe}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{amsmath}
+\usepackage{algorithm2e}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amsfonts}
+\usepackage{caption} 
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage[export]{adjustbox}
+
+% Define code colors
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinelanguage{NutellaProtocol}{
+  keywords={id, from, type, payload, run_id, app_id, component_id, resource_id},
+  keywordstyle=\color{codepurple}\bfseries,
+  ndkeywords={run, request},
+  ndkeywordstyle=\color{orange}\bfseries,
+  identifierstyle=\color{codegray},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{codegreen}\ttfamily,
+  % stringstyle=\color{black}\ttfamily
+}
+
+\lstset{
+   language=NutellaProtocol,
+   backgroundcolor=\color{white},
+   extendedchars=true,
+   basicstyle=\linespread{1.5}\footnotesize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b
+}
+\begin{document}
+
+% Declarations for Front Matter
+
+\title{RoomPlaces: a system for supporting science inquiry in the Classroom of Things}
+\author{Gianluca Venturini}
+\pdegrees{B.S, Politecnico di Milano, Milan, Italy, 2015}
+\degree{Master in Computer Science}
+\maketitle
+
+
+\acknowledgements
+{I want to ``thank'' my committee, without whose ridiculous demands, I
+would have graduated so, so, very much faster.
+
+\begin{flushright}
+AB %(your initials)
+\end{flushright}}
+
+
+\tableofcontents
+\listoftables
+\listoffigures
+\listofabbreviations
+\begin{list}
+{}
+{\setlength
+   {\labelwidth}{1in}
+    \setlength{\leftmargin}{1.5in}
+    \setlength{\labelsep}{.5in}
+    \setlength{\rightmargin}{\leftmargin}}
+\item[AMS\hfill] American Mathematical Society
+\item[CTAN\hfill] Comprehensive \TeX\ Archive Network
+\item[TUG\hfill] \TeX\ Users Group
+\item[UIC\hfill] University of Illinois at Chicago
+\item[UICTHESI\hfill] Thesis formatting system for use at UIC
+\item[RID\hfill] Resource Identifier
+\item[TUI\hfill] Tangible User Interfaces
+\item[KCI\hfill] Knowledge  Community  and  Inquiry
+PDA
+GPS
+PIC
+FM
+USB
+RFID
+LED
+API
+MQTT
+JSON
+TCP
+DBm
+\end{list}
+
+\squarebrackets %this makes the citations with square brackets
+\captionsetup[table]{skip=10pt} %to separate table captions from the table itself
+
+\input {chapters/00_Summary}
+\input {chapters/01_Introduction}
+\input {chapters/02_PreviousWorks}
+\input {chapters/03_RoomPlaces}
+\input {chapters/04_UserStudy}
+\input {chapters/05_Conclusions}
+
+
+
+\appendices
+\newpage
+\appendix
+
+\input {appendixes/nutella_protocol}
+\input {appendixes/roomplaces_protocol}
+\input {appendixes/roomplaces_api}
+
+\nocite{*}
+\bibformb
+\bibliography{uicbib}
+
+\newpage
+\vita
+\begin{singlespace}
+\LTXtable{\textwidth}{chapters/07_Vita.tex}
+\end{singlespace}
+
+\end{document}
