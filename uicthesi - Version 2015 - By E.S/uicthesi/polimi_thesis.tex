@@ -3,8 +3,8 @@
 % to LaTeX 2e. This is based in part on UCTHESIS.
 %
 
-%\documentclass[draft]{uicthesi}
-\documentclass{uicthesi}
+%\documentclass[draft]{polimithesi}
+\documentclass{polimithesi}
 \usepackage{tabularx} %vita
 \usepackage{ltablex} % for pagebreaks of tabularx
 \usepackage{array}		 %vita
@@ -29,6 +29,7 @@
 \usepackage{color}
 \usepackage{multirow}
 \usepackage[export]{adjustbox}
+\usepackage[utf8]{inputenc}
 
 % Define code colors
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -65,19 +66,29 @@
 
 % Declarations for Front Matter
 
-\title{RoomPlaces: a system for supporting science inquiry in the Classroom of Things}
+\title{RoomPlaces: a system for supporting science inquiry\\ in the Classroom of Things}
+
+\begin{figure}
+\centering
+\includegraphics[width=2in]{images/poli_logo.pdf}
+\end{figure}
+
 \author{Gianluca Venturini}
-\pdegrees{B.S, Politecnico di Milano, Milan, Italy, 2015}
+\matricola{814236}
+\scuola{Scuola di Ingegneria Industriale e dell'Informazione}
+\corso{Corso di Laurea Specialistica in Ingegneria Informatica}
 \degree{Master in Computer Science}
 \maketitle
 
 
 \acknowledgements
-{I want to ``thank'' my committee, without whose ridiculous demands, I
-would have graduated so, so, very much faster.
+{Firstly, I would like to express my sincere gratitude to my advisor Prof. Tom Moher for the continuous support of my Master study and related research, for his patience, motivation, and immense knowledge. His guidance helped me in all the time of research and writing of this thesis. I could not have imagined having a better advisor and mentor for my Master study.\\
+Besides my advisor, I would like to thank the rest of my thesis committee: Prof. Ugo Buy and Prof. Franca Garzotto for their insightful comments and encouragement.\\
+I thank my fellow labmates and friends at the Learning Technologies Group for the stimulating discussions, for the sleepless nights we were working together before deadlines, and for all the fun we have had in the last year.\\
+Finally, I would like to thank my friends and my family: my parents and my sister for supporting me spiritually throughout writing this thesis and my life in general.
 
 \begin{flushright}
-AB %(your initials)
+GV %(your initials)
 \end{flushright}}
 
 
@@ -92,32 +103,30 @@ AB %(your initials)
     \setlength{\leftmargin}{1.5in}
     \setlength{\labelsep}{.5in}
     \setlength{\rightmargin}{\leftmargin}}
-\item[AMS\hfill] American Mathematical Society
-\item[CTAN\hfill] Comprehensive \TeX\ Archive Network
-\item[TUG\hfill] \TeX\ Users Group
-\item[UIC\hfill] University of Illinois at Chicago
-\item[UICTHESI\hfill] Thesis formatting system for use at UIC
-\item[RID\hfill] Resource Identifier
-\item[TUI\hfill] Tangible User Interfaces
+\item[API\hfill] Application programming interface
+\item[DBm\hfill] Becibel milliwatt
+\item[FM\hfill] Frequency Modulation
+\item[GPS\hfill] Global Positioning System
+\item[JSON\hfill] JavaScript Object Notation
 \item[KCI\hfill] Knowledge  Community  and  Inquiry
-PDA
-GPS
-PIC
-FM
-USB
-RFID
-LED
-API
-MQTT
-JSON
-TCP
-DBm
+\item[LED\hfill] Light Emitting Diode
+\item[MQTT\hfill] MQ Telemetry Transport
+\item[PDA\hfill] Personal Digital Assistant
+\item[PIC\hfill] Peripheral Interface Controller
+\item[RFID\hfill] Radio-Frequency IDentification
+\item[RID\hfill] Resource Identifier
+\item[TCP\hfill] Transmission Control Protocol
+\item[TUI\hfill] Tangible User Interfaces
+\item[UIC\hfill] University of Illinois at Chicago
+\item[USB\hfill] Universal Serial Bus
 \end{list}
 
 \squarebrackets %this makes the citations with square brackets
 \captionsetup[table]{skip=10pt} %to separate table captions from the table itself
 
-\input {chapters/00_Summary}
+\input {chapters/001_AbstractItaliano}
+\input {chapters/002_AmpioEstratto}
+\input {chapters/000_Summary}
 \input {chapters/01_Introduction}
 \input {chapters/02_PreviousWorks}
 \input {chapters/03_RoomPlaces}
