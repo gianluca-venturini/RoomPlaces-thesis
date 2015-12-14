@@ -182,7 +182,7 @@
                Submitted as partial fulfillment of the requirements\\
                for the degree of \@degree\\
                in the Graduate College of the\\
-               University of Illinois at Chicago, \@date
+               University of Illinois at Chicago, 2016
                \vskip 3\baselineskip
                Chicago, Illinois
             \end{center}}
